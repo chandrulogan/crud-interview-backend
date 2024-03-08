@@ -1,5 +1,7 @@
 const Employee = require("../model/employeeModel")
 
+
+// this will find the employee
 exports.findIndiEmployee = async (req, res) => {
     try {
         const { userId } = req.params
@@ -25,6 +27,7 @@ exports.findIndiEmployee = async (req, res) => {
     }
 }
 
+// this will show employee I have created
 exports.viewMyEmployees = async (req, res) => {
     try {
         const { adminId } = req.params
@@ -50,12 +53,13 @@ exports.viewMyEmployees = async (req, res) => {
     }
 }
 
+// using this we can add the new employee
 exports.addEmployee = async (req, res) => {
     try {
         const newEmployee = await Employee.create({
             adminId: req.body.adminId,
             name: req.body.name,
-            email: req.body.email,
+            email: req.body.mail,
             mobileNumber: req.body.mobileNumber,
             department: req.body.department,
             designation: req.body.designation
@@ -69,12 +73,13 @@ exports.addEmployee = async (req, res) => {
         })
     } catch (error) {
         res.status(500).json({
-            status: "success",
-            message: "Internal server error"
+            status: "fail",
+            message: error
         })
     }
 }
 
+// using this we can edit the employee data
 exports.editEmployeeInfo = async (req, res) => {
     try {
         const { userId } = req.params
@@ -92,7 +97,7 @@ exports.editEmployeeInfo = async (req, res) => {
             { _id: userId },
             {
                 name: req.body.name,
-                email: req.body.email,
+                email: req.body.mail,
                 mobileNumber: req.body.mobileNumber,
                 department: req.body.department,
                 designation: req.body.designation
@@ -102,6 +107,27 @@ exports.editEmployeeInfo = async (req, res) => {
         res.status(200).json({
             status: "success",
             editEmployeeInfo
+        })
+
+    } catch (error) {
+        res.status(500).json({
+            status: "success",
+            message: "Internal server error"
+        })
+    }
+}
+
+// using this we can delete the employee record
+exports.deleteEmployeeInfo = async (req, res) => {
+    try {
+        const { userId } = req.params
+
+        const deletetedEmployee = await Employee.deleteOne({ _id: userId })
+
+        res.status(200).json({
+            status: "success",
+            message: "Data deleted successfully",
+            deletetedEmployee
         })
 
     } catch (error) {

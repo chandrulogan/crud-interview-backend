@@ -2,12 +2,13 @@ const User = require("../model/authModel")
 
 exports.signup = async (req, res) => {
     try {
+        console.log("Signup API running");
         if (req.body.password.length >= 8) {
             if (req.body.password === req.body.confirmPassword) {
                 const newUser = await User.create({
                     name: req.body.name,
                     email: req.body.email,
-                    mobileNumber: req.body.mobileNumber,
+                    phoneNumber: req.body.phoneNumber,
                     password: req.body.password,
                     confirmPassword: req.body.confirmPassword
                 })
@@ -38,7 +39,7 @@ exports.signup = async (req, res) => {
         res.status(401).json({
             status: "fail",
             data: {
-                message: "User already registered"
+                message: error
             }
         })
     }

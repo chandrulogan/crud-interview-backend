@@ -12,9 +12,9 @@ const authSchema = new mongoose.Schema(
             type: String,
             required:[true, "Email is required"]
         },
-        mobileNumber:{
+        phoneNumber:{
             type: String,
-            required: [true,"mobileNumber is required"]
+            required: [true,"phoneNumber is required"]
         },
         password:{
             type: String,
